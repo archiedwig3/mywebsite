@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Project</title>
+
+<style>
+:root {
+  --bg: #121417;
+  --card: #1b1f24;
+  --text: #e6e6e6;
+  --accent: #4da3ff;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero {
+  max-width: 800px;
+  margin: auto;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 40px;
+}
+
+.panel {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 20px;
+  transition: 0.3s;
+  position: relative;
+}
+
+.panel:hover {
+  box-shadow: 0 0 20px var(--accent);
+}
+
+.panel-top {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.panel img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+}
+
+.panel h3 {
+  margin: 0;
+}
+
+.panel p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.panel button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+}
+
+.panel button:hover {
+  box-shadow: 0 0 10px var(--accent);
+}
+
+footer {
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #333;
+}
+
+footer a {
+  margin: 0 10px;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+#about {
+  display: none;
+  padding: 60px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 id="title"></h1>
+  <p id="description"></p>
+</section>
+
+<!-- PANELS -->
+<section class="panels" id="panels"></section>
+
+<!-- ABOUT SECTION -->
+<section id="about">
+  <h2>About Us</h2>
+  <p id="aboutText"></p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a onclick="showAbout()">About Us</a>
+  <a id="contactLink" target="_blank">Contact Us</a>
+</footer>
+
+<script>
+// ================= CONFIG =================
+const config = {
+  title: "Theguy underground",
+  description: "We are about games and more stuff like Roblox, Minecraft, and stuff for discord.",
+
+  aboutText: "We made this so you can have freedom and build cool stuff easily.",
+
+  contactLink: "https://discord.gg/CWhyCGfRkz",
+
+  panels: [
+    {
+      title: "Panel 1",
+      text: "Description for panel 1",
+      image: "https://via.placeholder.com/60",
+      buttonText: "Go",
+      link: "https://example.com"
+    },
+    {
+      title: "Panel 2",
+      text: "Description for panel 2",
+      image: "https://via.placeholder.com/60",
+      buttonText: "Visit",
+      link: "https://example.com"
+    },
+    {
+      title: "Panel 3",
+      text: "Description for panel 3",
+      image: "https://via.placeholder.com/60",
+      buttonText: "Open",
+      link: "https://example.com"
+    },
+    {
+      title: "Panel 4",
+      text: "Description for panel 4",
+      image: "https://via.placeholder.com/60",
+      buttonText: "Go",
+      link: "https://example.com"
+    },
+    {
+      title: "Panel 5",
+      text: "Description for panel 5",
+      image: "https://via.placeholder.com/60",
+      buttonText: "Check",
+      link: "https://example.com"
+    },
+    {
+      title: "Panel 6",
+      text: "Description for panel 6",
+      image: "https://via.placeholder.com/60",
+      buttonText: "Visit",
+      link: "https://example.com"
+    }
+  ]
+};
+// ==========================================
+
+// SET TEXT
+document.getElementById("title").innerText = config.title;
+document.getElementById("description").innerText = config.description;
+document.getElementById("aboutText").innerText = config.aboutText;
+document.getElementById("contactLink").href = config.contactLink;
+
+// CREATE PANELS
+const panelContainer = document.getElementById("panels");
+
+config.panels.forEach(p => {
+  const div = document.createElement("div");
+  div.className = "panel";
+
+  div.innerHTML = `
+    <div class="panel-top">
+      <img src="${p.image}">
+      <div>
+        <h3>${p.title}</h3>
+        <p>${p.text}</p>
+      </div>
+    </div>
+    <button onclick="window.open('${p.link}', '_blank')">
+      ${p.buttonText}
+    </button>
+  `;
+
+  panelContainer.appendChild(div);
+});
+
+// ABOUT TOGGLE
+function showAbout() {
+  document.getElementById("about").style.display = "block";
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>
