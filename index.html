@@ -2,46 +2,80 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>My Project</title>
+<title>Project Hub</title>
 
 <style>
 :root {
-  --bg: #121417;
-  --card: #1b1f24;
-  --text: #e6e6e6;
-  --accent: #4da3ff;
+  --bg: #14181d;
+  --card: #1e242b;
+  --text: #e8e8e8;
+  --accent: #5aa8ff;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", sans-serif;
   background: var(--bg);
   color: var(--text);
+  overflow-x: hidden;
 }
 
-section {
-  padding: 80px 20px;
-  text-align: center;
-}
-
+/* HERO */
 .hero {
-  max-width: 800px;
-  margin: auto;
+  text-align: center;
+  padding: 120px 20px 60px;
+  transform: scale(0.9);
+  opacity: 0;
+  animation: zoomIn 1s ease forwards;
 }
 
-.panels {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  padding: 40px;
+@keyframes zoomIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.7;
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+/* PANELS LAYOUT */
+.panel-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  padding: 60px 20px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .panel {
+  width: 320px;
   background: var(--card);
   border-radius: 20px;
   padding: 20px;
-  transition: 0.3s;
-  position: relative;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.4s;
+}
+
+.panel.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .panel:hover {
@@ -50,7 +84,6 @@ section {
 
 .panel-top {
   display: flex;
-  align-items: center;
   gap: 15px;
 }
 
@@ -71,7 +104,8 @@ section {
 
 .panel button {
   margin-top: 20px;
-  padding: 10px 20px;
+  width: 100%;
+  padding: 10px;
   border-radius: 999px;
   border: none;
   background: var(--accent);
@@ -83,21 +117,30 @@ section {
   box-shadow: 0 0 10px var(--accent);
 }
 
+/* ABOUT */
+#about {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+#about p {
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.7;
+}
+
+/* FOOTER */
 footer {
-  padding: 20px;
+  margin-top: 80px;
+  padding: 30px;
   text-align: center;
   border-top: 1px solid #333;
 }
 
 footer a {
-  margin: 0 10px;
+  margin: 0 15px;
   color: var(--accent);
   cursor: pointer;
-}
-
-#about {
-  display: none;
-  padding: 60px;
 }
 </style>
 </head>
@@ -111,9 +154,12 @@ footer a {
 </section>
 
 <!-- PANELS -->
-<section class="panels" id="panels"></section>
+<div class="panel-wrapper">
+  <div class="column" id="leftCol"></div>
+  <div class="column" id="rightCol"></div>
+</div>
 
-<!-- ABOUT SECTION -->
+<!-- ABOUT -->
 <section id="about">
   <h2>About Us</h2>
   <p id="aboutText"></p>
@@ -121,63 +167,28 @@ footer a {
 
 <!-- FOOTER -->
 <footer>
-  <a onclick="showAbout()">About Us</a>
+  <a onclick="scrollToAbout()">About Us</a>
   <a id="contactLink" target="_blank">Contact Us</a>
 </footer>
 
 <script>
 // ================= CONFIG =================
 const config = {
-  title: "Theguy underground",
-  description: "We are about games and more stuff like Roblox, Minecraft, and stuff for discord.",
+  title: "Ultimate Gaming Hub",
 
-  aboutText: "We made this so you can have freedom and build cool stuff easily.",
+  description: "This project is built as a central place where you can explore and access a variety of content related to Roblox, Minecraft, and Discord communities. Whether you're looking for tools, servers, resources, or just cool things to check out, this hub is designed to bring everything together in one clean and easy-to-use space. As the project grows, more features, panels, and integrations will be added to expand what you can do here and make everything more accessible.",
 
-  contactLink: "https://discord.gg/CWhyCGfRkz",
+  aboutText: "We created this platform to give people more freedom when it comes to discovering and using online tools, communities, and experiences. Instead of having everything scattered across different websites, this hub brings it all into one place where it’s easy to navigate and constantly improving. The goal is to keep things simple, fast, and useful while still allowing room to expand into something much bigger over time. This project is actively being worked on and will continue to evolve with new ideas, improvements, and features.",
+
+  contactLink: "https://discord.gg/YOUR_LINK",
 
   panels: [
-    {
-      title: "Panel 1",
-      text: "Description for panel 1",
-      image: "https://via.placeholder.com/60",
-      buttonText: "Go",
-      link: "https://example.com"
-    },
-    {
-      title: "Panel 2",
-      text: "Description for panel 2",
-      image: "https://via.placeholder.com/60",
-      buttonText: "Visit",
-      link: "https://example.com"
-    },
-    {
-      title: "Panel 3",
-      text: "Description for panel 3",
-      image: "https://via.placeholder.com/60",
-      buttonText: "Open",
-      link: "https://example.com"
-    },
-    {
-      title: "Panel 4",
-      text: "Description for panel 4",
-      image: "https://via.placeholder.com/60",
-      buttonText: "Go",
-      link: "https://example.com"
-    },
-    {
-      title: "Panel 5",
-      text: "Description for panel 5",
-      image: "https://via.placeholder.com/60",
-      buttonText: "Check",
-      link: "https://example.com"
-    },
-    {
-      title: "Panel 6",
-      text: "Description for panel 6",
-      image: "https://via.placeholder.com/60",
-      buttonText: "Visit",
-      link: "https://example.com"
-    }
+    { title: "Roblox Tools", text: "Explore Roblox-related content and tools.", image: "https://via.placeholder.com/60", button: "Open", link: "https://example.com" },
+    { title: "Minecraft Mods", text: "Find useful Minecraft mods and resources.", image: "https://via.placeholder.com/60", button: "Open", link: "https://example.com" },
+    { title: "Discord Servers", text: "Join active communities on Discord.", image: "https://via.placeholder.com/60", button: "Join", link: "https://example.com" },
+    { title: "Game Assets", text: "Access assets and builds.", image: "https://via.placeholder.com/60", button: "View", link: "https://example.com" },
+    { title: "Scripts", text: "Useful scripts and utilities.", image: "https://via.placeholder.com/60", button: "Check", link: "https://example.com" },
+    { title: "Community Hub", text: "See everything in one place.", image: "https://via.placeholder.com/60", button: "Explore", link: "https://example.com" }
   ]
 };
 // ==========================================
@@ -189,9 +200,10 @@ document.getElementById("aboutText").innerText = config.aboutText;
 document.getElementById("contactLink").href = config.contactLink;
 
 // CREATE PANELS
-const panelContainer = document.getElementById("panels");
+const left = document.getElementById("leftCol");
+const right = document.getElementById("rightCol");
 
-config.panels.forEach(p => {
+config.panels.forEach((p, i) => {
   const div = document.createElement("div");
   div.className = "panel";
 
@@ -203,18 +215,19 @@ config.panels.forEach(p => {
         <p>${p.text}</p>
       </div>
     </div>
-    <button onclick="window.open('${p.link}', '_blank')">
-      ${p.buttonText}
-    </button>
+    <button onclick="window.open('${p.link}', '_blank')">${p.button}</button>
   `;
 
-  panelContainer.appendChild(div);
+  (i % 2 === 0 ? left : right).appendChild(div);
+
+  setTimeout(() => {
+    div.classList.add("show");
+  }, i * 200);
 });
 
-// ABOUT TOGGLE
-function showAbout() {
-  document.getElementById("about").style.display = "block";
-  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+// SCROLL
+function scrollToAbout() {
+  document.getElementById("about").scrollIntoView({ behavior: "smooth" });
 }
 </script>
 
